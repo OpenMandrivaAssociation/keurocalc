@@ -8,7 +8,6 @@ Source0: 	http://opensource.bureau-cornavin.com/keurocalc/%name-%{version}.tar.b
 
 License:  	GPL
 Group: 		Graphical desktop/KDE
-BuildRoot: 	%_tmppath/%name-%version-%release-root
 BuildRequires:	arts 
 BuildRequires:  kdelibs-devel 
 
