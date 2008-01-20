@@ -2,19 +2,21 @@
 Summary: 	Keurocalc 
 Name:   	keurocalc
 Version: 	0.9.7
-Release: 	%mkrel 1 
+Release: 	%mkrel 2
 Url:		http://opensource.bureau-cornavin.com/keurocalc/index.html
 Source0: 	http://opensource.bureau-cornavin.com/keurocalc/%name-%{version}.tar.bz2
 
 License:  	GPL
 Group: 		Graphical desktop/KDE
 BuildRoot: 	%_tmppath/%name-%version-%release-root
-BuildRequires:	arts 
+BuildRequires:	arts-devel
 BuildRequires:  kdelibs-devel 
 
 Obsoletes:	kde3-keurocalc
 Provides:	kde3-keurocalc
+
 Patch1:		keurocalc-autoconf-2.6.patch
+Patch2:         keurocalc-fix-desktopfile.patch
 
 %description
 KEuroCalc is a currency converter and calculator centered on the Euro. It can
@@ -26,6 +28,7 @@ through the Internet.
 
 %setup -q -nkeurocalc
 %patch1 -p1 -b .autoconf
+%patch2 -p0 -b .fix_desktop_file
 
 %build
 make -f admin/Makefile.common
@@ -53,12 +56,6 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 
 make install prefix=%buildroot/%_prefix
 
-install -d %buildroot/%_menudir
-
-kdedesktop2mdkmenu.pl keurocalc Applications/Finances %buildroot/%_datadir/applnk/Applications/keurocalc.desktop %buildroot/%_menudir/keurocalc
-
-# David - 0.03-2mdk - Provide menu's icons for all WM/DM
-perl -ppi -e "s|icon=\"keurocalc.png\"|icon=\"finances_section.png\"|" %buildroot/%_menudir/keurocalc
 
 %find_lang %{name} 
 
@@ -68,29 +65,21 @@ rm -fr %buildroot
 %post
 /sbin/ldconfig
 %{update_menus}
-%if %mdkversion > 200600
 %update_icon_cache hicolor
-%endif
  
 %postun
 /sbin/ldconfig
 %{clean_menus} 
-%if %mdkversion > 200600
 %clean_icon_cache hicolor
-%endif
 
 
 %files -f %name.lang
 %defattr(-,root,root)
 %_bindir/%name
-#
-%_menudir/%name 
 %_datadir/applnk/Applications/%name.desktop
-
 
 %dir %_datadir/apps/keurocalc/
 %_datadir/apps/keurocalc/splash.png
-
 %_datadir/apps/keurocalc/currencies.xml
 
 %dir %_docdir/HTML/pt/keurocalc
