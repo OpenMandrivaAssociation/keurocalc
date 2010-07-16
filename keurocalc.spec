@@ -1,14 +1,14 @@
 Summary: 	Keurocalc 
 Name:   	keurocalc
-Version: 	1.0.2
-Release: 	%mkrel 2
+Version: 	1.0.3
+Release: 	%mkrel 1
 Url:		http://opensource.bureau-cornavin.com/keurocalc/index.html
-Source0: 	http://opensource.bureau-cornavin.com/keurocalc/%name-%{version}.tgz
-Patch2:         keurocalc-fix-desktopfile.patch
+Source0: 	http://opensource.bureau-cornavin.com/keurocalc/sources/%name-%version.tgz
 License:  	GPL
 Group: 		Graphical desktop/KDE
 BuildRoot: 	%_tmppath/%name-%version-%release-root
-BuildRequires:  kdelibs4-devel 
+BuildRequires:  kdelibs4-devel
+BuildRequires:	desktop-file-utils
 
 %description
 KEuroCalc is a currency converter and calculator centered on the Euro. It can
@@ -26,7 +26,6 @@ curconvd is a daemon that acts as a currency conversion service over D-Bus.
 
 %prep
 %setup -q
-%patch2 -p0
 
 %build
 %cmake_kde4
@@ -34,9 +33,11 @@ curconvd is a daemon that acts as a currency conversion service over D-Bus.
 
 %install
 rm -fr %buildroot
-cd build
-%makeinstall_std
-cd -
+%makeinstall_std -C build
+
+desktop-file-install --dir=%buildroot%_kde_applicationsdir \
+	--add-category='Finance' \
+	%buildroot%_kde_applicationsdir/%name.desktop
 
 %find_lang %{name} --with-html
 
@@ -59,7 +60,7 @@ rm -fr %buildroot
 %defattr(-,root,root)
 %doc ChangeLog README TODO
 %_kde_bindir/%name
-%_kde_datadir/applications/kde4/%name.desktop
+%_kde_applicationsdir/%name.desktop
 %_kde_appsdir/%name
 %_kde_iconsdir/hicolor/*/*/*
 
