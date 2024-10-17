@@ -2,7 +2,7 @@ Summary: 	Keurocalc
 Name:   	keurocalc
 Version: 	1.1.0
 Release: 	2
-Url:		http://opensource.bureau-cornavin.com/keurocalc/index.html
+Url:		https://opensource.bureau-cornavin.com/keurocalc/index.html
 Source0: 	http://opensource.bureau-cornavin.com/keurocalc/sources/%name-%version.tgz
 License:  	GPL
 Group: 		Graphical desktop/KDE
