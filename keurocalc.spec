@@ -7,6 +7,7 @@ Source0: 	http://opensource.bureau-cornavin.com/keurocalc/sources/%name-%version
 License:  	GPL
 Group: 		Graphical desktop/KDE
 BuildRoot: 	%_tmppath/%name-%version-%release-root
+BuildRequires:	make
 BuildRequires:  kdelibs4-devel
 BuildRequires:	desktop-file-utils
 
